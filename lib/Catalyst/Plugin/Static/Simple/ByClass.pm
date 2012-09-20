@@ -9,7 +9,7 @@ use Class::Inspector;
 use Path::Class;
 with 'Catalyst::Plugin::Static::Simple';
 
-our $VERSION = '0.004';
+our $VERSION = '0.004_01';
 
 =head1 NAME
 
@@ -22,7 +22,7 @@ Catalyst::Plugin::Static::Simple::ByClass - locate static content in @INC
  );
  
  __PACKAGE__->config(
-     static => {
+     'Plugin::Static::Simple::ByClass' => {
          classes => [ qw( MyClass::Foo ) ]
      }
  );
@@ -50,7 +50,15 @@ for a list of class names to require and add to the include_path.
 before setup_finalize => sub {
     my $c = shift;
 
-    my $config = $c->config->{static};
+    $c->log->warn(
+        "Deprecated 'static' config key used, please use the key 'Plugin::Static::Simple::ByClass' instead"
+    ) if exists $c->config->{static};
+
+    my $config = $c->config->{'Plugin::Static::Simple::ByClass'}
+        = Catalyst::Utils::merge_hashes(
+        $c->config->{'Plugin::Static::Simple::ByClass'} || {},
+        $c->config->{static} || {} );
+
     for my $class ( @{ $config->{classes} || [] } ) {
 
         eval "require $class";
@@ -60,7 +68,7 @@ before setup_finalize => sub {
         }
         my $base = Class::Inspector->loaded_filename($class);
         $base =~ s/\.pm$//;
-        push( @{ $config->{include_path} }, Path::Class::dir($base) );
+        push( @{ $c->config->{'Plugin::Static::Simple'}->{include_path} }, Path::Class::dir($base) );
 
     }
     return $c;
