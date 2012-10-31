@@ -12,5 +12,5 @@ Revision history for Catalyst-Plugin-Static-Simple-ByClass
 0.004   28 Feb 2010
         * trim stuff out of MyApp test files to remove false dependencies.
 
-0.005   xxx
+0.005   31 Oct 2012
         * use new config style and deprecate 'static' key

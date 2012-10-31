@@ -9,7 +9,7 @@ use Class::Inspector;
 use Path::Class;
 with 'Catalyst::Plugin::Static::Simple';
 
-our $VERSION = '0.004_01';
+our $VERSION = '0.005';
 
 =head1 NAME
 
