@@ -13,7 +13,7 @@ WriteMakefile(
         'Test::More'                       => 0,
         'Catalyst::Runtime'                => 5.8,
         'Path::Class'                      => 0,
-        'Catalyst::Plugin::Static::Simple' => 0.29,
+        'Catalyst::Plugin::Static::Simple' => 0.30,
         'Class::Inspector'                 => 0,
     },
     dist => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
